@@ -31,7 +31,7 @@ Usage
 Installation
 ------------------
 
-Clone the repository in a subfolder "InsertDate" in your Sublime Text "Packages" directory:
+Clone the repository in a subfolder "StringUtilities" in your Sublime Text "Packages" directory:
 
     git clone git://github.com/LONGMANi/sublimetext-stringutilities.git
 
