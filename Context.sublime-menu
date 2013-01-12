@@ -1,0 +1,36 @@
+[
+    { "caption" : "-", "id" : "context-convert-end"},
+    {
+        "caption" : "String Utilities",
+        "id" : "context-convert",
+        "children" :
+        [
+            { "command": "convert_tabs_to_spaces", "caption" : "Convert Tabs to Spaces" },
+            { "command": "convert_spaces_to_tabs", "caption" : "Convert Spaces to Tabs" },
+            { "caption": "-" },
+            { "command": "convert_chars_to_html", "caption" : "Convert Chars to HTML Entities" },
+            { "command": "convert_html_to_chars", "caption" : "Convert HTML Entities to Chars" },
+            { "caption": "-" },
+            { "command": "convert_camel_underscores", "caption" : "Convert Camel Case <-> Underscores" },
+            { "caption": "-" },
+            { "command": "convert_to_unicode_notation", "caption" : "Convert To Unicode Notation" },
+            { "command": "convert_from_unicode_notation", "caption" : "Convert From Unicode Notation" },
+            { "command": "convert_to_base64", "caption" : "Convert To Base64" },
+            { "command": "convert_from_base64", "caption" : "Convert From Base64" },
+            { "command": "convert_to_hex", "caption" : "Convert To Hex" },
+            { "command": "convert_from_hex", "caption" : "Convert From Hex" },
+            { "command": "convert_hex_to_rgb", "caption" : "Convert HTML Color Hex To RGB" },
+            { "command": "convert_rgb_to_hex", "caption" : "Convert HTML Color RGB To Hex" },
+            { "command": "convert_md5", "caption" : "Calculate MD5"},
+            { "command": "convert_sha1", "caption" : "Calculate SHA1"},
+            { "caption": "-" },
+            { "command": "convert_time_format", "caption": "Convert Unixtime <-> Datetime" },
+            { "command": "insert_timestamp", "caption": "Insert Current Datetime" },
+           { "caption": "-" },
+           { "command": "generate_short_password", "caption": "Insert Short Password" },
+           { "command": "generate_medium_password", "caption": "Insert Medium Password" },
+           { "command": "generate_long_password", "caption": "Insert Long Password" }
+        ]
+    },
+    { "caption" : "-", "id" : "context-convert-end"}
+]
