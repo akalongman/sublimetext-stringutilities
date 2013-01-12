@@ -23,10 +23,6 @@ Insert Short Password
 Insert Medium Password
 Insert Long Password
 
-Usage
-------------------
-
-* Right click on editor window and select String Utilities menu.
 
 Installation
 ------------------
@@ -47,6 +43,11 @@ Or enter
 sublime.packages_path()
 ```
 into the console (`` Ctrl-` ``).
+
+Usage
+------------------
+
+* Right click on editor window and select String Utilities menu.
 
 Todo
 ------------------
