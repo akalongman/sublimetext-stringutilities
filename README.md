@@ -47,7 +47,7 @@ into the console (`` Ctrl-` ``).
 Usage
 ------------------
 
-* Right click on editor window and select String Utilities menu.
+* Right click on editor window (first select text if function is convert type) and select String Utilities menu item.
 
 Todo
 ------------------
