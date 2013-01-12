@@ -47,3 +47,8 @@ Or enter
 sublime.packages_path()
 ```
 into the console (`` Ctrl-` ``).
+
+Todo
+------------------
+
+ * Add some missed functions
