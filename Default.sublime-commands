@@ -1,0 +1,82 @@
+[
+	{
+		"caption": "String Utilities: Convert Tabs to Spaces",
+		"command": "convert_tabs_to_spaces"
+	},
+	{
+		"caption": "String Utilities: Convert Spaces to Tabs",
+		"command": "convert_spaces_to_tabs"
+	},
+	{
+		"caption": "String Utilities: Convert Chars to HTML Entities",
+		"command": "convert_chars_to_html"
+	},
+	{
+		"caption": "String Utilities: Convert HTML Entities to Chars",
+		"command": "convert_html_to_chars"
+	},
+	{
+		"caption": "String Utilities: Convert Camel Case <-> Underscores",
+		"command": "convert_camel_underscores"
+	},
+	{
+		"caption": "String Utilities: Convert To Unicode Notation",
+		"command": "convert_to_unicode_notation"
+	},
+	{
+		"caption": "String Utilities: Convert From Unicode Notation",
+		"command": "convert_from_unicode_notation"
+	},
+	{
+		"caption": "String Utilities: Convert To Base64",
+		"command": "convert_to_base64"
+	},
+	{
+		"caption": "String Utilities: Convert From Base64",
+		"command": "convert_from_base64"
+	},
+	{
+		"caption": "String Utilities: Convert To Hex",
+		"command": "convert_to_hex"
+	},
+	{
+		"caption": "String Utilities: Convert From Hex",
+		"command": "convert_from_hex"
+	},
+	{
+		"caption": "String Utilities: Convert HTML Color Hex To RGB",
+		"command": "convert_hex_to_rgb"
+	},
+	{
+		"caption": "String Utilities: Convert HTML Color RGB To Hex",
+		"command": "convert_rgb_to_hex"
+	},
+	{
+		"caption": "String Utilities: Calculate MD5",
+		"command": "convert_md5"
+	},
+	{
+		"caption": "String Utilities: Calculate SHA1",
+		"command": "convert_sha1"
+	},
+	{
+		"caption": "String Utilities: Convert Unixtime <-> Datetime",
+		"command": "convert_time_format"
+	},
+	{
+		"caption": "String Utilities: Insert Current Datetime",
+		"command": "insert_timestamp"
+	},
+	{
+		"caption": "String Utilities: Insert Short Password",
+		"command": "generate_short_password"
+	},
+	{
+		"caption": "String Utilities: Insert Medium Password",
+		"command": "generate_medium_password"
+	},
+	{
+		"caption": "String Utilities: Insert Long Password",
+		"command": "generate_long_password"
+	}
+]
