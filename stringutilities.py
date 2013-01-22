@@ -316,4 +316,3 @@ class GenerateSecurePasswordCommand(PasswordCommand):
     chars = string.letters + string.digits
     def length(self):
         return randrange(20, 31)
-
