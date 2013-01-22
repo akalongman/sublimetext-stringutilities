@@ -8,7 +8,7 @@
 			"homepage": "https://github.com/LONGMANi/sublimetext-stringutilities",
 			"last_modified": "2013-01-22 05:04:31",
 			"platforms": {
-				"osx": [
+				"*": [
 					{
 						"version": "1.0.2",
 						"url": "https://nodeload.github.com/LONGMANi/sublimetext-stringutilities/zip/1.0.2"
