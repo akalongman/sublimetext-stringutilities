@@ -199,7 +199,11 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, self.rgb_to_hex(text))
+                str_len = len(text)
+                reg_rgb = '^rgb[a]?\((\s*\d+\s*),(\s*\d+\s*),(\s*\d+\s*),?(\s*(0?.?\d)+\s*)?\)$'
+                rgb_match = re.match(reg_rgb, text)
+                if rgb_match is not None:
+                	self.view.replace(edit, region, self.rgb_to_hex(rgb_match))
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -207,13 +211,23 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
         else:
             return self.view.encoding()
 
-    def rgb_to_hex(self, rgb):
-        # @TODO resolve rgb() notation
-        rgb = eval(rgb)
-        r = rgb[0]
-        g = rgb[1]
-        b = rgb[2]
-        return '#%02X%02X%02X' % (r,g,b)
+    def rgb_to_hex(self, rgb_match):
+        """Converts an rgb(a) value to a hex value.
+
+        Attributes:
+            self: The Regionset object.
+            rgb_match: The reg exp collection of matches.
+
+        """
+
+        # Convert all values to 10-base integers, strip the leading characters,
+        # convert to hex and fill with leading zero's.
+        val_1 = hex(int(rgb_match.group(1), 10))[2:].zfill(2)
+        val_2 = hex(int(rgb_match.group(2), 10))[2:].zfill(2)
+        val_3 = hex(int(rgb_match.group(3), 10))[2:].zfill(2)
+
+        # Return the proformatted string with the new values.
+        return '#%s%s%s' % (val_1, val_2, val_3)
 
 
 class ConvertMd5Command(sublime_plugin.TextCommand):
