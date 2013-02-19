@@ -6,12 +6,12 @@
 			"description": "StringUtilities is a Sublime Text 2 plugin, which adds to the editor useful string functions",
 			"author": "Avtandil Kikabidze",
 			"homepage": "https://github.com/LONGMANi/sublimetext-stringutilities",
-			"last_modified": "2013-01-22 05:04:31",
+			"last_modified": "2013-02-19 23:58",
 			"platforms": {
 				"*": [
 					{
-						"version": "1.0.2",
-						"url": "https://nodeload.github.com/LONGMANi/sublimetext-stringutilities/zip/1.0.2"
+						"version": "1.0.3",
+						"url": "https://nodeload.github.com/LONGMANi/sublimetext-stringutilities/zip/1.0.3"
 					}
 				]
 			}

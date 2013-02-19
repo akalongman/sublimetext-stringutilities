@@ -78,5 +78,13 @@
 	{
 		"caption": "String Utilities: Insert Long Password",
 		"command": "generate_long_password"
+	},
+	{
+		"caption": "String Utilities: Insert Internal IP",
+		"command": "string_utilities_int_ip"
+	},
+	{
+		"caption": "String Utilities: Insert External IP",
+		"command": "string_utilities_ext_ip"
 	}
 ]

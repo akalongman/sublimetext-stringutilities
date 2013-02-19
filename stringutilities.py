@@ -11,6 +11,7 @@ from hashlib import md5,sha1
 from datetime import datetime
 from dateutil.parser import parse
 from random import sample, choice, randrange
+import os, socket, urllib2
 
 class ConvertTabsToSpacesCommand(sublime_plugin.TextCommand):
     #Convert Tabs To Spaces
@@ -316,3 +317,42 @@ class GenerateSecurePasswordCommand(PasswordCommand):
     chars = string.letters + string.digits
     def length(self):
         return randrange(20, 31)
+
+
+class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        ext_ip = urllib2.urlopen('http://api.long.ge/sublimetext/ip.php').read()
+        for region in self.view.sel():
+            self.view.insert(edit, region.begin(), ext_ip.encode(self.enc()))
+
+    def enc(self):
+        if self.view.encoding() == 'Undefined':
+            return self.view.settings().get('default_encoding', 'UTF-8')
+        else:
+            return self.view.encoding()
+
+class StringUtilitiesIntIpCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('long.ge', 0))
+        int_ip = s.getsockname()[0]
+        for region in self.view.sel():
+                self.view.insert(edit, region.begin(), int_ip.encode(self.enc()))
+
+    def enc(self):
+        if self.view.encoding() == 'Undefined':
+            return self.view.settings().get('default_encoding', 'UTF-8')
+        else:
+            return self.view.encoding()
+
+class StringUtilitiesTestCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        ext_ip = urllib2.urlopen('http://api.long.ge/sublimetext/ip.php').read()
+        for region in self.view.sel():
+            self.view.insert(edit, region.begin(), ext_ip.encode(self.enc()))
+
+    def enc(self):
+        if self.view.encoding() == 'Undefined':
+            return self.view.settings().get('default_encoding', 'UTF-8')
+        else:
+            return self.view.encoding()
