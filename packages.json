@@ -10,8 +10,8 @@
 			"platforms": {
 				"*": [
 					{
-						"version": "1.0.3",
-						"url": "https://nodeload.github.com/LONGMANi/sublimetext-stringutilities/zip/1.0.3"
+						"version": "1.0.4",
+						"url": "https://nodeload.github.com/LONGMANi/sublimetext-stringutilities/zip/1.0.4"
 					}
 				]
 			}
