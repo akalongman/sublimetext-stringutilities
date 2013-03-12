@@ -37,7 +37,7 @@ If you prefer to install manually, install git, then:
 
 Clone the repository in a subfolder "StringUtilities" in your Sublime Text "Packages" directory:
 
-    git clone https://github.com/LONGMANi/sublimetext-stringutilities "<Sublime Text 2 Packages folder>/StringUtilities"
+    git clone https://github.com/akalongman/sublimetext-stringutilities "<Sublime Text 2 Packages folder>/StringUtilities"
 
 
 The "Packages" directory is located at:
