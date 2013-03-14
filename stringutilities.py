@@ -371,3 +371,13 @@ class StringUtilitiesTestCommand(sublime_plugin.TextCommand):
             return self.view.settings().get('default_encoding', 'UTF-8')
         else:
             return self.view.encoding()
+
+class SelectToEndoflineCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        for thisRegion in self.view.sel():
+            self.view.sel().add(sublime.Region(thisRegion.begin(), self.view.line(thisRegion.begin()).end()))
+
+class SelectToBegoflineCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        for thisRegion in self.view.sel():
+            self.view.sel().add(sublime.Region(thisRegion.begin(), self.view.line(thisRegion.begin()).begin()))
