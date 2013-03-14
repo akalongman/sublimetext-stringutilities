@@ -380,4 +380,4 @@ class SelectToEndoflineCommand(sublime_plugin.TextCommand):
 class SelectToBegoflineCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         for thisRegion in self.view.sel():
-            self.view.sel().add(sublime.Region(self.view.line(thisRegion.begin()).begin(), thisRegion.begin()+1))
+            self.view.sel().add(sublime.Region(self.view.line(thisRegion.begin()).begin(), thisRegion.end()))            
