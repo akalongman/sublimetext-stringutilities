@@ -24,6 +24,8 @@ StringUtilities is a Sublime Text 2 plugin, which adds to the editor useful stri
 * Insert Long Password
 * Insert Internal IP Address
 * Insert External IP Address
+* Expand Selection to Line Beginning
+* Expand Selection to Line End
 
 
 Installation
