@@ -32,7 +32,9 @@
 			{ "command": "generate_long_password", "caption": "Insert Long Password" },
 			{ "caption": "-" },
 			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
-			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" }
+			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
+			{ "command": "select_to_begofline", "caption": "Expand Selection to Line Beginning" },
+			{ "command": "select_to_endofline", "caption": "Expand Selection to Line End" }
 		]
 	},
 	{ "caption" : "-", "id" : "context-convert-end"}
