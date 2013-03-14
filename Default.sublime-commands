@@ -86,5 +86,13 @@
 	{
 		"caption": "String Utilities: Insert External IP",
 		"command": "string_utilities_ext_ip"
+	},
+	{
+		"caption": "String Utilities: Expand Selection to Line Beginning",
+		"command": "select_to_begofline"
+	},
+	{
+		"caption": "String Utilities: Expand Selection to Line End",
+		"command": "select_to_endofline"
 	}
 ]
