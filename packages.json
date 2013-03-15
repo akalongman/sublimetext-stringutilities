@@ -3,7 +3,7 @@
 	"packages": [
 		{
 			"name": "StringUtilities",
-			"description": "StringUtilities is a Sublime Text 2 plugin, which adds to the editor useful string functions",
+			"description": "StringUtilities is a Sublime Text 2/3 plugin, which adds to the editor useful string functions",
 			"author": "Avtandil Kikabidze",
 			"homepage": "https://github.com/akalongman/sublimetext-stringutilities",
 			"last_modified": "2013-02-19 23:58",
