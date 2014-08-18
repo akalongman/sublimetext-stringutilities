@@ -68,16 +68,39 @@
 		"command": "insert_timestamp"
 	},
 	{
-		"caption": "String Utilities: Insert Short Password",
-		"command": "generate_short_password"
+		"caption": "String Utilities: Insert Password (6 char)",
+		"command": "generate_password",
+		"args": {"length": "6"}
 	},
 	{
-		"caption": "String Utilities: Insert Medium Password",
-		"command": "generate_medium_password"
+		"caption": "String Utilities: Insert Password (8 char)",
+		"command": "generate_password",
+		"args": {"length": "8"}
 	},
 	{
-		"caption": "String Utilities: Insert Long Password",
-		"command": "generate_long_password"
+		"caption": "String Utilities: Insert Password (12 char)",
+		"command": "generate_password",
+		"args": {"length": "12"}
+	},
+	{
+		"caption": "String Utilities: Insert Password (16 char)",
+		"command": "generate_password",
+		"args": {"length": "16"}
+	},
+	{
+		"caption": "String Utilities: Insert Password (32 char)",
+		"command": "generate_password",
+		"args": {"length": "32"}
+	},
+	{
+		"caption": "String Utilities: Insert Password (40 char)",
+		"command": "generate_password",
+		"args": {"length": "40"}
+	},
+	{
+		"caption": "String Utilities: Insert Password (64 char)",
+		"command": "generate_password",
+		"args": {"length": "64"}
 	},
 	{
 		"caption": "String Utilities: Insert Internal IP",
@@ -86,5 +109,9 @@
 	{
 		"caption": "String Utilities: Insert External IP",
 		"command": "string_utilities_ext_ip"
+	},
+	{
+		"caption": "String Utilities: Decode JSON",
+		"command": "string_utilities_decode_json"
 	}
 ]

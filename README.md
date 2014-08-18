@@ -1,6 +1,6 @@
 SublimeText - StringUtilities
 ===============
-StringUtilities is a Sublime Text 2 plugin, which adds to the editor useful string functions like:
+StringUtilities is a Sublime Text 3 plugin, which adds to the editor useful string functions like:
 
 * Convert Tabs to Spaces
 * Convert Spaces to Tabs
@@ -24,6 +24,7 @@ StringUtilities is a Sublime Text 2 plugin, which adds to the editor useful stri
 * Insert Long Password
 * Insert Internal IP Address
 * Insert External IP Address
+* Decode JSON String
 
 
 Installation
@@ -37,7 +38,7 @@ If you prefer to install manually, install git, then:
 
 Clone the repository in a subfolder "StringUtilities" in your Sublime Text "Packages" directory:
 
-    git clone https://github.com/akalongman/sublimetext-stringutilities "<Sublime Text 2 Packages folder>/StringUtilities"
+    git clone https://github.com/akalongman/sublimetext-stringutilities "<Sublime Text 3 Packages folder>/StringUtilities"
 
 
 The "Packages" directory is located at:

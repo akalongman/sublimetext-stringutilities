@@ -27,12 +27,19 @@
 			{ "command": "convert_time_format", "caption": "Convert Unixtime <-> Datetime" },
 			{ "command": "insert_timestamp", "caption": "Insert Current Datetime" },
 			{ "caption": "-" },
-			{ "command": "generate_short_password", "caption": "Insert Short Password" },
-			{ "command": "generate_medium_password", "caption": "Insert Medium Password" },
-			{ "command": "generate_long_password", "caption": "Insert Long Password" },
+			{ "command": "generate_password", "caption": "Insert Password (6 char)", "args": {"length": "6"} },
+			{ "command": "generate_password", "caption": "Insert Password (8 char)", "args": {"length": "8"} },
+			{ "command": "generate_password", "caption": "Insert Password (12 char)", "args": {"length": "12"} },
+			{ "command": "generate_password", "caption": "Insert Password (16 char)", "args": {"length": "16"} },
+			{ "command": "generate_password", "caption": "Insert Password (32 char)", "args": {"length": "32"} },
+			{ "command": "generate_password", "caption": "Insert Password (40 char)", "args": {"length": "40"} },
+			{ "command": "generate_password", "caption": "Insert Password (64 char)", "args": {"length": "64"} },
+
 			{ "caption": "-" },
 			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
-			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" }
+			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
+			{ "caption": "-" },
+			{ "command": "string_utilities_decode_json", "caption": "Decode JSON" },
 		]
 	},
 	{ "caption" : "-", "id" : "context-convert-end"}

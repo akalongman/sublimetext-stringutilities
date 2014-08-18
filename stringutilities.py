@@ -5,13 +5,18 @@ import re
 import sys
 import time
 import base64
-import htmlentitydefs
+import html.entities
 from cgi import escape
 from hashlib import md5,sha1
 from datetime import datetime
-from dateutil.parser import parse
 from random import sample, choice, randrange
-import os, socket, urllib2
+import os, socket, urllib
+import binascii
+import json
+import pprint
+
+
+
 
 class ConvertTabsToSpacesCommand(sublime_plugin.TextCommand):
     #Convert Tabs To Spaces
@@ -112,7 +117,9 @@ class ConvertToBase64Command(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, base64.b64encode(text))
+                t = base64.b64encode(text)
+                txt = str(t,'ascii')
+                self.view.replace(edit, region, txt)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -126,11 +133,10 @@ class ConvertFromBase64Command(sublime_plugin.TextCommand):
     def run(self, edit):
         for region in self.view.sel():
             if not region.empty():
-                try:
-                    text = base64.b64decode(self.view.substr(region).encode(self.enc()))
-                    self.view.replace(edit, region, text.decode('utf-8'))
-                except:
-                    sublime.status_message('Convert error.')
+                text = self.view.substr(region).encode(self.enc())
+                t = base64.b64decode(text)
+                txt = str(t,'ascii')
+                self.view.replace(edit, region, txt)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -144,7 +150,9 @@ class ConvertToHexCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, text.encode("hex"))
+                t = binascii.hexlify(text)
+                txt = str(t,'ascii')
+                self.view.replace(edit, region, txt)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -159,7 +167,9 @@ class ConvertFromHexCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, text.decode("hex"))
+                t = binascii.unhexlify(text)
+                txt = str(t,'ascii')
+                self.view.replace(edit, region, txt)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -266,7 +276,11 @@ class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                result = self.from_unix(text) if re.match(ur'^([0-9]+)$', text) else self.to_unix(text)
+
+                if re.match('^([0-9]+)$', text):
+                    result = self.from_unix(text)
+                else:
+                    result = self.to_unix(text)
 
                 if result:
                     self.view.replace(edit, region, result)
@@ -275,12 +289,14 @@ class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
 
     def from_unix(self, timestamp):
         sublime.status_message('Convert from epoch to human readable date.')
-        return datetime.fromtimestamp(int(timestamp)).strftime("%Y-%m-%d %H:%M")
+        timestamp = float(timestamp)
+        stamp = datetime.fromtimestamp(timestamp)
+        return stamp.strftime("%Y-%m-%d %H:%M")
 
     def to_unix(self, timestr):
         sublime.status_message('Convert from human readable date to epoch.')
         try:
-            return '%d' % (time.mktime(parse(timestr).timetuple()))
+            return '%d' % (time.mktime(timestr.timetuple()))
         except:
             return False
 
@@ -292,38 +308,21 @@ class InsertTimestampCommand(sublime_plugin.TextCommand):
             self.view.insert(edit, region.begin(), datetime.now().strftime("%Y-%m-%d %H:%M"))
 
 
-class PasswordCommand(sublime_plugin.TextCommand):
-    chars = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ"
+class GeneratePasswordCommand(sublime_plugin.TextCommand):
+	chars = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ"
 
-    def run(self, edit):
-        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, self.length())))
-
-    def length(self):
-        return randrange(6, 31)
-
-class GenerateShortPasswordCommand(PasswordCommand):
-    def length(self):
-        return randrange(6, 9)
-
-class GenerateMediumPasswordCommand(PasswordCommand):
-    def length(self):
-        return randrange(9, 14)
-
-class GenerateLongPasswordCommand(PasswordCommand):
-    def length(self):
-        return randrange(14, 20)
-
-class GenerateSecurePasswordCommand(PasswordCommand):
-    chars = string.letters + string.digits
-    def length(self):
-        return randrange(20, 31)
+	def run(self, edit, length=16):
+		length = int(length)
+		self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
 
 
 class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        ext_ip = urllib2.urlopen('http://api.long.ge/sublimetext/ip.php').read()
+        url = "http://api.long.ge/sublimetext/ip.php"
+        request = urllib.request.Request(url)
+        response = urllib.request.urlopen(request)
         for region in self.view.sel():
-            self.view.insert(edit, region.begin(), ext_ip.encode(self.enc()))
+            self.view.insert(edit, region.begin(), response.read().decode(self.enc()))
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -334,16 +333,71 @@ class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
 class StringUtilitiesIntIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('long.ge', 0))
+        s.connect(('google.com', 0))
         int_ip = s.getsockname()[0]
+        s.close()
         for region in self.view.sel():
-                self.view.insert(edit, region.begin(), int_ip.encode(self.enc()))
+                self.view.insert(edit, region.begin(), int_ip)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
             return self.view.settings().get('default_encoding', 'UTF-8')
         else:
             return self.view.encoding()
+
+
+
+class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
+	output = ""
+	i = 0
+
+	def run(self, edit):
+		for region in self.view.sel():
+			self.output = ""
+			if not region.empty():
+				text = self.view.substr(region).encode(self.enc())
+				text = str(text, 'utf8')
+				data = json.loads(text, encoding='utf8')
+				self.recursive_print(data)
+
+				#print(self.output)
+
+				#pp = pprint.PrettyPrinter(indent=4, width=1)
+				#data = pp.pformat(data)
+				#data = self.output
+				#data = data.replace('{   ', '{')
+				#data = data.replace('{', '\n   {\n')
+
+				self.view.replace(edit, region, self.output)
+
+	def enc(self):
+		if self.view.encoding() == 'Undefined':
+			return self.view.settings().get('default_encoding', 'UTF-8')
+		else:
+			return self.view.encoding()
+
+	def recursive_print(self, src, dpth = 0, key = ''):
+		""" Recursively prints nested elements."""
+		tabs = lambda n: '\t' * n * 1 # or 2 or 8 or...
+		brace = lambda s, n: '%s%s%s' % ('['*n, s, ']'*n)
+
+		if isinstance(src, dict):
+			for key, value in src.items():
+				if isinstance(value, dict) or (isinstance(value, list)):
+					self.output += tabs(dpth) + brace(key, dpth) + "\n"
+				self.recursive_print(value, dpth + 1, key)
+		elif (isinstance(src, list)):
+			self.i = 0
+			for litem in src:
+				self.recursive_print(litem, dpth + 1)
+		else:
+			if key:
+				self.output += tabs(dpth) + '[%s] => %s' % (key, src) + "\n"
+			else:
+				self.i = self.i + 1
+				self.output += tabs(dpth) + str(self.i) + ' => %s' % src + "\n"
+
+
 
 class StringUtilitiesTestCommand(sublime_plugin.TextCommand):
     def run(self, edit):
