@@ -1,4 +1,8 @@
-SublimeText - StringUtilities
+Thanks for installing Sublime StringUtilities! Below are some quick notes to get you
+started with the plugin.
+
+
+StringUtilities
 ===============
 StringUtilities is a Sublime Text 3 plugin, which adds to the editor useful string functions like:
 
@@ -61,7 +65,7 @@ Clone the repository in a subfolder "StringUtilities" in your Sublime Text "Pack
 The "Packages" directory is located at:
 
 * Linux: `~/.config/sublime-text-3/Packages/`
-* OS X: `~/Library/Application Support/Sublime Text 32/Packages/`
+* OS X: `~/Library/Application Support/Sublime Text 3/Packages/`
 * Windows: `%APPDATA%/Sublime Text 3/Packages/`
 
 Or enter

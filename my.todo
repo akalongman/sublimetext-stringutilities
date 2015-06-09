@@ -1,0 +1,32 @@
+Provides actions for text manipulation:
+Toggle style (camelCase, hyphen-lowercase, HYPHEN-UPPERCASE, snake_case, SCREAMING_SNAKE_CASE, dot.case, words lowercase, Words Capitalized)
+To SCREAMING_SNAKE_CASE (or to camelCase)
+To snake_case (or to camelCase)
+To dot.case (or to camelCase)
+To hyphen-case (or to camelCase)
+To hyphen-case (or to snake_case)
+To camelCase (or to words)
+Capitalize selected text
+Un/Escape selected Java text
+Un/Escape selected JavaScript text
+Un/Escape selected HTML text
+Un/Escape selected XML text
+Un/Escape selected SQL text
+Un/Escape selected PHP text
+Trim selected text
+Trim all spaces in selected text
+Remove all spaces in selected text
+De/Encode selected text as URL
+Convert selected text to Camel Case
+Convert selected text to Constant Case
+Encode selected text to MD5 Hex16
+De/Encode selected text to Base64
+Remove duplicate lines
+Remove empty lines
+Convert non ASCII to escaped Unicode
+Convert escaped Unicode to String
+
+Increment/decrement all numbers found.
+Duplicate line and increment/decrement all numbers found.
+Convert a single quoted string to a double quoted one completely keeping semantics.
+Convert a double quoted string to a single quoted one completely keeping semantics by concatenating the embedded variables.

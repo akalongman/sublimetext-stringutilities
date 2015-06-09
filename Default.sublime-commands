@@ -16,6 +16,22 @@
 		"command": "convert_html_to_chars"
 	},
 	{
+		"caption": "String Utilities: Convert Single Quotes to Double",
+		"command": "convert_single_quotes_to_double"
+	},
+	{
+		"caption": "String Utilities: Convert Double Quotes to Single",
+		"command": "convert_double_quotes_to_single"
+	},
+	{
+		"caption": "String Utilities: Encode URL",
+		"command": "encode_url"
+	},
+	{
+		"caption": "String Utilities: Decode URL",
+		"command": "decode_url"
+	},
+	{
 		"caption": "String Utilities: Convert Camel Case <-> Underscores",
 		"command": "convert_camel_underscores"
 	},

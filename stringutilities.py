@@ -1,3 +1,8 @@
+# @author 			Avtandil Kikabidze
+# @copyright 		Copyright (c) 2008-2015, Avtandil Kikabidze aka LONGMAN (akalongman@gmail.com)
+# @link 			http://long.ge
+# @license 		The MIT License (MIT)
+
 import sublime
 import sublime_plugin
 import string
@@ -14,9 +19,21 @@ import os, socket, urllib
 import binascii
 import json
 import pprint
+import urllib.parse
 
 
+st_version = 2
+if sublime.version() == '' or int(sublime.version()) > 3000:
+	st_version = 3
 
+def plugin_loaded():
+	if st_version == 2:
+		sublime.error_message(u'StringUtilities\n\nSublime Text 2 not supported! Use Sublime Text 3 instead')
+
+	print('StringUtilities: Plugin Initialized')
+
+if st_version == 2:
+	plugin_loaded()
 
 class ConvertTabsToSpacesCommand(sublime_plugin.TextCommand):
     #Convert Tabs To Spaces
@@ -396,6 +413,49 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
 			else:
 				self.i = self.i + 1
 				self.output += tabs(dpth) + str(self.i) + ' => %s' % src + "\n"
+
+
+
+
+
+
+class ConvertSingleQuotesToDoubleCommand(sublime_plugin.TextCommand):
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                txt = text.replace("'", '"')
+                self.view.replace(edit, region, txt)
+
+
+class ConvertDoubleQuotesToSingleCommand(sublime_plugin.TextCommand):
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                txt = text.replace('"', "'")
+                self.view.replace(edit, region, txt)
+
+class EncodeUrlCommand(sublime_plugin.TextCommand):
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                txt = urllib.parse.quote(text)
+                self.view.replace(edit, region, txt)
+
+class DecodeUrlCommand(sublime_plugin.TextCommand):
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                txt = urllib.parse.unquote(text)
+                self.view.replace(edit, region, txt)
+
 
 
 
