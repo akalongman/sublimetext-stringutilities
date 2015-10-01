@@ -15,7 +15,9 @@ import binascii
 import json
 import pprint
 
-
+if sys.hexversion >= 0x3000000:
+    def unichr(c):
+        return chr(c)
 
 
 class ConvertTabsToSpacesCommand(sublime_plugin.TextCommand):
@@ -92,7 +94,7 @@ class ConvertToUnicodeNotationCommand(sublime_plugin.TextCommand):
             if not region.empty():
                 text = ''
                 for c in self.view.substr(region):
-                    if not re.match(pattern, c) and (c < 0x20 or c > 0x7e):
+                    if not re.match(pattern, c) and (ord(c) < 0x20 or ord(c) > 0x7e):
                         text += '\\u{0:04X}'.format(ord(c))
                     else:
                         text += c
