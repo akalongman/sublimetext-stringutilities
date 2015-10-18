@@ -120,7 +120,7 @@ class ConvertToBase64Command(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
                 t = base64.b64encode(text)
-                txt = str(t,'ascii')
+                txt = str(t, self.enc())
                 self.view.replace(edit, region, txt)
 
     def enc(self):
@@ -137,7 +137,7 @@ class ConvertFromBase64Command(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
                 t = base64.b64decode(text)
-                txt = str(t,'ascii')
+                txt = str(t, self.enc())
                 self.view.replace(edit, region, txt)
 
     def enc(self):
