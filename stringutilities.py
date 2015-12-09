@@ -5,7 +5,7 @@ import re
 import sys
 import time
 import base64
-import html.entities
+import html.entities as htmlentitydefs
 from cgi import escape
 from hashlib import md5,sha1
 from datetime import datetime
