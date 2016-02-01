@@ -13,6 +13,10 @@
 			{ "caption": "-" },
 			{ "command": "convert_camel_underscores", "caption" : "Convert Camel Case <-> Underscores" },
 			{ "caption": "-" },
+            { "command": "convert_single_quotes_to_double", "caption" : "Convert Single Quotes To Double" },
+            { "command": "convert_double_quotes_to_single", "caption" : "Convert Double Quotes To Single" },
+            { "command": "url_encode", "caption" : "Encode as URL Notation" },
+            { "command": "url_decode", "caption" : "Decode from URL Notation" },
 			{ "command": "convert_to_unicode_notation", "caption" : "Convert To Unicode Notation" },
 			{ "command": "convert_from_unicode_notation", "caption" : "Convert From Unicode Notation" },
 			{ "command": "convert_to_base64", "caption" : "Convert To Base64" },
@@ -38,7 +42,7 @@
 			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
 			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
 			{ "caption": "-" },
-			{ "command": "string_utilities_decode_json", "caption": "Decode JSON" },
+			{ "command": "string_utilities_decode_json", "caption": "Pretify JSON String" },
 		]
 	},
 	{ "caption" : "-", "id" : "context-convert-end"}

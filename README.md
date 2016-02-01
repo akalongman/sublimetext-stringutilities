@@ -7,6 +7,10 @@ StringUtilities is a Sublime Text 3 plugin, which adds to the editor useful stri
 * Convert Chars to Html Entities
 * Convert Html Entities to Chars
 * Convert Camel Case <-> Underscores
+* Convert Single Quotes To Double
+* Convert Double Quotes To Single
+* Encode as URL Notation
+* Decode from URL Notation
 * Convert To Unicode Notation
 * Convert From Unicode Notation
 * Convert To Base64
@@ -28,16 +32,16 @@ StringUtilities is a Sublime Text 3 plugin, which adds to the editor useful stri
 * Generate Password (64 char)
 * Insert Internal IP Address
 * Insert External IP Address
-* Decode JSON String
+* Pretify JSON String
 
 
 Sponsors
-------------------
+-----
 No sponsors yet.. :(
 
 If you like the software, don't forget to donate to further development of it!
 
-[![PayPal donate button](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MVCBM7M2RCEX6&lc=US&item_name=Support%20our%20open%2dsource%20initiatives&item_number=donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted "Donate once-off to this project using Paypal")
+[![PayPal donate button](https://www.paypalobjects.com/webstatic/en_US/btn/btn_donate_pp_142x27.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=akalongman@gmail.com&item_name=Donation to Sublime Text - StringUtilities&item_number=1&no_shipping=1 "Donate to this project using Paypal")
 
 
 Installation
