@@ -92,6 +92,22 @@
 		"command": "convert_sha1"
 	},
 	{
+		"caption": "String Utilities: Calculate SHA224",
+		"command": "convert_sha224"
+	},
+	{
+		"caption": "String Utilities: Calculate SHA256",
+		"command": "convert_sha256"
+	},
+	{
+		"caption": "String Utilities: Calculate SHA384",
+		"command": "convert_sha384"
+	},
+	{
+		"caption": "String Utilities: Calculate SHA512",
+		"command": "convert_sha512"
+	},
+	{
 		"caption": "String Utilities: Convert Unixtime <-> Datetime",
 		"command": "convert_time_format"
 	},

@@ -12,7 +12,7 @@ import time
 import base64
 import html.entities as htmlentitydefs
 from cgi import escape
-from hashlib import md5,sha1
+from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from datetime import datetime
 from random import sample, choice, randrange
 import os, socket, urllib
@@ -369,35 +369,35 @@ class UrlEncodeCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, text)
 
 
+class ConvertMd5Command(ConvertSelection):
+    """Calculate the MD5 hash of the selected text"""
+    def convert(self, text):
+        return md5(text).hexdigest()
 
+class ConvertSha1Command(ConvertSelection):
+    """Calculate the SHA1 hash of the selected text"""
+    def convert(self, text):
+        return sha1(text).hexdigest()
 
-class ConvertMd5Command(sublime_plugin.TextCommand):
-    #Calculate MD5 hash
-    def run(self, edit):
-        for region in self.view.sel():
-            if not region.empty():
-                text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, md5(text).hexdigest())
+class ConvertSha224Command(ConvertSelection):
+    """Calculate the SHA224 hash of the selected text"""
+    def convert(self, text):
+        return sha224(text).hexdigest()
 
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+class ConvertSha256Command(ConvertSelection):
+    """Calculate the SHA256 hash of the selected text"""
+    def convert(self, text):
+        return sha256(text).hexdigest()
 
-class ConvertSha1Command(sublime_plugin.TextCommand):
-    #Calculate SHA1 hash
-    def run(self, edit):
-        for region in self.view.sel():
-            if not region.empty():
-                text = self.view.substr(region).encode(self.enc())
-                self.view.replace(edit, region, sha1(text).hexdigest())
+class ConvertSha384Command(ConvertSelection):
+    """Calculate the SHA384 hash of the selected text"""
+    def convert(self, text):
+        return sha384(text).hexdigest()
 
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+class ConvertSha512Command(ConvertSelection):
+    """Calculate the SHA512 hash of the selected text"""
+    def convert(self, text):
+        return sha512(text).hexdigest()
 
 
 class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
