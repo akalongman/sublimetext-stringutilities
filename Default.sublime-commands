@@ -129,5 +129,13 @@
 	{
 		"caption": "String Utilities: Decode JSON",
 		"command": "string_utilities_decode_json"
+	},
+	{
+		"caption": "String Utilities: Convert to URL Quoted",
+		"command": "convert_to_url_quoted"
+	},
+	{
+		"caption": "String Utilities: Convert from URL Quoted",
+		"command": "convert_from_url_quoted"
 	}
 ]
