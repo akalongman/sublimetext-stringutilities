@@ -8,6 +8,10 @@
 		"command": "convert_spaces_to_tabs"
 	},
 	{
+		"caption": "String Utilities: Convert Spaces to &nbsp; (Non-breaking space)",
+		"command": "convert_spaces_to_non_breaking"
+	},
+	{
 		"caption": "String Utilities: Convert Chars to HTML Entities",
 		"command": "convert_chars_to_html"
 	},
