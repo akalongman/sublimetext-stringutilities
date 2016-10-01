@@ -74,12 +74,12 @@ class ConvertHtmlToCharsCommand(sublime_plugin.TextCommand):
 
 
 class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
-    #Convert CamelCase to under_scores and vice versa
+    #Convert camelCase to under_scores and vice versa
     def run(self, edit):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toCamelCase(text) if '_' in text else self.toUnderscores(text)
+                text = self.toCamelCase(text) if '_' in text and text[0].islower() else self.toUnderscores(text)
                 self.view.replace(edit, region, text)
 
     def toUnderscores(self, name):
@@ -87,6 +87,23 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     def toCamelCase(self, name):
+        return ''.join(ch.capitalize() if i % 2 else ch for i, ch in enumerate(name.split('_')))
+
+
+class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
+    #Convert PascalCase to under_scores and vice versa
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                text = self.toPascalCase(text) if '_' in text and text[0].isupper() else self.toUnderscores(text)
+                self.view.replace(edit, region, text)
+
+    def toUnderscores(self, name):
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+    def toPascalCase(self, name):
         return ''.join(map(lambda x: x.capitalize(), name.split('_')))
 
 

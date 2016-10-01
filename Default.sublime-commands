@@ -16,8 +16,12 @@
 		"command": "convert_html_to_chars"
 	},
     {
-        "caption": "String Utilities: Convert Camel Case <-> Underscores",
+        "caption": "String Utilities: Convert camelCase <-> Underscores",
         "command": "convert_camel_underscores"
+    },
+    {
+        "caption": "String Utilities: Convert PascalCase <-> Underscores",
+        "command": "convert_pascal_underscores"
     },
     {
         "caption": "String Utilities: Convert Single Quotes To Double",
