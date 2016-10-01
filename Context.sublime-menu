@@ -40,6 +40,8 @@
 			{ "command": "generate_password", "caption": "Generate Password (40 char)", "args": {"length": "40"} },
 			{ "command": "generate_password", "caption": "Generate Password (64 char)", "args": {"length": "64"} },
 			{ "caption": "-" },
+			{ "command": "decode_heidi_sql", "caption": "Decode HeidiSQL password"},
+			{ "caption": "-" },
 			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
 			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
 			{ "caption": "-" },

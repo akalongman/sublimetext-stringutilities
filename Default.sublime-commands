@@ -123,6 +123,10 @@
 		"args": {"length": "64"}
 	},
 	{
+		"caption": "String Utilities: Decode HeidiSQL password",
+		"command": "decode_heidi_sql"
+	},
+	{
 		"caption": "String Utilities: Insert Internal IP",
 		"command": "string_utilities_int_ip"
 	},

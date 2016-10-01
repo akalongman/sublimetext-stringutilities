@@ -375,6 +375,20 @@ class GeneratePasswordCommand(sublime_plugin.TextCommand):
         length = int(length)
         self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
 
+class DecodeHeidiSqlCommand(sublime_plugin.TextCommand):
+    # Requires .strip('\x00') on output otherwise sublimetext adds a 'NUL' control chracter
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                if text[0].isdigit(): text = self.decodeHeidi(text) 
+                self.view.replace(edit, region, text)
+
+    def decodeHeidi(self, hex_in):
+        shift = int(hex_in[-1])
+        shifted_list = [int(hex_in[i:i+2], 16) for i in range(0, len(hex_in), 2)]
+        return ''.join(chr(out_ch - shift) for out_ch in shifted_list).strip('\x00')
+
 
 class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
