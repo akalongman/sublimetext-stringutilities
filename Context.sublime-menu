@@ -42,7 +42,10 @@
 			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
 			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
 			{ "caption": "-" },
-			{ "command": "string_utilities_decode_json", "caption": "Pretify JSON String" }
+			{ "command": "string_utilities_decode_json", "caption": "Pretify JSON String" },
+			{ "caption": "-" },
+			{ "command": "php_object_to_array", "caption": "Convert PHP Object to Array" }
+
 		]
 	},
 	{ "caption" : "-", "id" : "context-convert-end"}

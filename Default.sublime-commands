@@ -129,5 +129,9 @@
 	{
 		"caption": "String Utilities: Decode JSON",
 		"command": "string_utilities_decode_json"
+	},
+	{
+		"caption": "String Utilities: PHP object to array",
+		"command": "php_object_to_array"
 	}
 ]

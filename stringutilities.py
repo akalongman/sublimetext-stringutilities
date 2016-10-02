@@ -457,3 +457,23 @@ class StringUtilitiesTestCommand(sublime_plugin.TextCommand):
             return self.view.settings().get('default_encoding', 'UTF-8')
         else:
             return self.view.encoding()
+
+
+class PhpObjectToArrayCommand(sublime_plugin.TextCommand):
+    """
+    convertes PHP Object into PHP Array Access
+    from $obj->variable into $obj['variable']
+    """
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                source_text = self.view.substr(region)
+                if "->" not in source_text:
+                    # nothing to replace
+                    pass
+
+                fragments = source_text.split("->")
+                result = "{}['{}']".format(fragments[0], fragments[1])
+
+                self.view.replace(edit, region, result)
