@@ -55,6 +55,16 @@ class ConvertSpacesToTabsCommand(sublime_plugin.TextCommand):
             self.view.sel().clear()
 
 
+class ConvertSpacesToNonBreaking(sublime_plugin.TextCommand):
+    #Convert Spaces into Non-breaking Spaces
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                text = text.replace(" ", "&nbsp;")
+                self.view.replace(edit, region, text)
+
+
 class ConvertCharsToHtmlCommand(sublime_plugin.TextCommand):
     #Convert Chars into XML/HTML Entities
     def run(self, edit):
