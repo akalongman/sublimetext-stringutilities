@@ -16,8 +16,12 @@
 		"command": "convert_html_to_chars"
 	},
     {
-        "caption": "String Utilities: Convert Camel Case <-> Underscores",
+        "caption": "String Utilities: Convert camelCase <-> Underscores",
         "command": "convert_camel_underscores"
+    },
+    {
+        "caption": "String Utilities: Convert PascalCase <-> Underscores",
+        "command": "convert_pascal_underscores"
     },
     {
         "caption": "String Utilities: Convert Single Quotes To Double",
@@ -117,6 +121,10 @@
 		"caption": "String Utilities: Insert Password (64 char)",
 		"command": "generate_password",
 		"args": {"length": "64"}
+	},
+	{
+		"caption": "String Utilities: Decode HeidiSQL password",
+		"command": "decode_heidi_sql"
 	},
 	{
 		"caption": "String Utilities: Insert Internal IP",
