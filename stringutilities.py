@@ -217,7 +217,7 @@ class ConvertHexToRgbCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                self.view.replace(edit, region, self.hex_to_rgb(text))
+                self.view.replace(edit, region, self.hexToRgb(text))
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -225,7 +225,7 @@ class ConvertHexToRgbCommand(sublime_plugin.TextCommand):
         else:
             return self.view.encoding()
 
-    def hex_to_rgb(self, value):
+    def hexToRgb(self, value):
         value = value.lstrip('#')
         lv = len(value)
         if lv == 6:
@@ -248,7 +248,7 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
                 reg_rgb = '^rgb[a]?\((\s*\d+\s*),(\s*\d+\s*),(\s*\d+\s*),?(\s*(0?.?\d)+\s*)?\)$'
                 rgb_match = re.match(reg_rgb, text)
                 if rgb_match is not None:
-                    self.view.replace(edit, region, self.rgb_to_hex(rgb_match))
+                    self.view.replace(edit, region, self.rgbToHex(rgb_match))
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
@@ -256,7 +256,7 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
         else:
             return self.view.encoding()
 
-    def rgb_to_hex(self, rgb_match):
+    def rgbToHex(self, rgb_match):
         """Converts an rgb(a) value to a hex value.
 
         Attributes:
@@ -347,22 +347,22 @@ class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
                 text = self.view.substr(region)
 
                 if re.match('^([0-9]+)$', text):
-                    result = self.from_unix(text)
+                    result = self.fromUnix(text)
                 else:
-                    result = self.to_unix(text)
+                    result = self.toUnix(text)
 
                 if result:
                     self.view.replace(edit, region, result)
                 else:
                     sublime.status_message('Convert error.')
 
-    def from_unix(self, timestamp):
+    def fromUnix(self, timestamp):
         sublime.status_message('Convert from epoch to human readable date.')
         timestamp = float(timestamp)
         stamp = datetime.fromtimestamp(timestamp)
         return stamp.strftime("%Y-%m-%d %H:%M")
 
-    def to_unix(self, timestr):
+    def toUnix(self, timestr):
         sublime.status_message('Convert from human readable date to epoch.')
         try:
             datetime_to_convert = datetime.strptime(timestr, "%Y-%m-%d %H:%M")
@@ -453,7 +453,7 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, output)
 
 
-                #self.recursive_print(data)
+                #self.recursivePrint(data)
 
                 #print(self.output)
 
@@ -471,7 +471,7 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
         else:
             return self.view.encoding()
 
-    def recursive_print(self, src, dpth = 0, key = ''):
+    def recursivePrint(self, src, dpth = 0, key = ''):
         """ Recursively prints nested elements."""
         tabs = lambda n: '\t' * n * 1 # or 2 or 8 or...
         brace = lambda s, n: '%s%s%s' % ('['*n, s, ']'*n)
@@ -480,11 +480,11 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
             for key, value in src.items():
                 if isinstance(value, dict) or (isinstance(value, list)):
                     self.output += tabs(dpth) + brace(key, dpth) + "\n"
-                self.recursive_print(value, dpth + 1, key)
+                self.recursivePrint(value, dpth + 1, key)
         elif (isinstance(src, list)):
             self.i = 0
             for litem in src:
-                self.recursive_print(litem, dpth + 1)
+                self.recursivePrint(litem, dpth + 1)
         else:
             if key:
                 self.output += tabs(dpth) + '[%s] => %s' % (key, src) + "\n"
