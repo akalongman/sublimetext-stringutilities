@@ -89,7 +89,7 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toCamelCase(text) if '_' in text and text[0].islower() else self.toUnderscores(text)
+                text = self.toCamelCase(text) if '_' in text and text[0].islower() else (text[0].islower() and self.toUnderscores(text))
                 self.view.replace(edit, region, text)
 
     def toUnderscores(self, name):
@@ -97,7 +97,7 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     def toCamelCase(self, name):
-        return ''.join(ch.capitalize() if i % 2 else ch for i, ch in enumerate(name.split('_')))
+        return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('_')))
 
 
 class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
@@ -106,7 +106,7 @@ class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toPascalCase(text) if '_' in text and text[0].islower() else self.toUnderscores(text)
+                text = self.toPascalCase(text) if '_' in text and text[0].islower() else (text[0].isupper() and self.toUnderscores(text))
                 self.view.replace(edit, region, text)
 
     def toUnderscores(self, name):
