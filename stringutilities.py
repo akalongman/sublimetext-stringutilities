@@ -97,7 +97,7 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     def toCamelCase(self, name):
-        return ''.join(ch.capitalize() if i % 2 else ch for i, ch in enumerate(name.split('_')))
+        return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('_')))
 
 
 class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
