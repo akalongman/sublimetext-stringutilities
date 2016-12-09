@@ -99,6 +99,22 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
     def toCamelCase(self, name):
         return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('_')))
 
+class ConvertCamelDashCommand(sublime_plugin.TextCommand):
+    #Convert camelCase to dash and vice versa
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                text = self.toCamelCase(text) if '-' in text and text[0].islower() else (text[0].islower() and self.toDash(text))
+                self.view.replace(edit, region, text)
+
+    def toDash(self, name):
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1-\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1-\2', s1).lower()
+
+    def toCamelCase(self, name):
+        return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('_')))
+
 
 class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
     #Convert PascalCase to under_scores and vice versa
