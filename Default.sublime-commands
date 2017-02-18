@@ -19,6 +19,10 @@
 		"caption": "String Utilities: Convert HTML Entities to Chars",
 		"command": "convert_html_to_chars"
 	},
+	{
+		"caption": "String Utilities: Convert PHP Object to Array",
+		"command": "convert_php_object_array"
+	},
     {
         "caption": "String Utilities: Convert camelCase <-> Underscores",
         "command": "convert_camel_underscores"

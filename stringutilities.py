@@ -83,6 +83,22 @@ class ConvertHtmlToCharsCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, text)
 
 
+class ConvertPhpObjectArrayCommand(sublime_plugin.TextCommand):
+    #Convert PHP objects to arrays and vice versa
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                text = self.phpToArray(text) if '->' in text and text.startswith('$') else self.arrayToPhp(text)
+                self.view.replace(edit, region, text)
+
+    def arrayToPhp(self, name):
+        return ('{0}->{1}'.format(name.split('[')[0], name.split('[')[1].replace('\'', '').replace(']', '')))
+
+    def phpToArray(self, name):
+        return ('{0}[{1}]'.format(name.split('->')[0], name.split('->')[1]))
+
+
 class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
     #Convert camelCase to under_scores and vice versa
     def run(self, edit):
