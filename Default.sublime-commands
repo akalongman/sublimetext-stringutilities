@@ -1,5 +1,9 @@
 [
 	{
+		"caption": "String Utilities: Expand Selection to Whole String",
+		"command": "string_utilities_expand_string"
+	},
+	{
 		"caption": "String Utilities: Convert Tabs to Spaces",
 		"command": "convert_tabs_to_spaces"
 	},
