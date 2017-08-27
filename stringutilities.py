@@ -24,6 +24,30 @@ if sys.hexversion >= 0x3000000:
     def unichr(c):
         return chr(c)
 
+class StringUtilitiesExpandStringCommand(sublime_plugin.TextCommand):
+    """If the region is contained in a string scope, expands the region to
+    the whole string. If the region is not contained in a string scope, this
+    command does nothing. It is applied to all regions in the current
+    selection."""
+
+    def run(self, edit):
+        for region in self.view.sel():
+            self._run(edit, region)
+
+    def _run(self, edit, region):
+        if (not self.view.match_selector(region.a, "string") or
+            not self.view.match_selector(region.b, "string")):
+            return
+        selector = "string punctuation.definition.string"
+        p = region.begin()
+        while not self.view.match_selector(p, selector):
+            p = self.view.find_by_class(p, False, sublime.CLASS_PUNCTUATION_START)
+        q = region.end()
+        while not self.view.match_selector(q, selector):
+            # sublime.CLASS_PUNCTUATION_END is broken
+            # this works too
+            q = self.view.find_by_class(q, True, sublime.CLASS_PUNCTUATION_START)
+        self.view.sel().add(sublime.Region(p, q + 1))
 
 class ConvertTabsToSpacesCommand(sublime_plugin.TextCommand):
     #Convert Tabs To Spaces
