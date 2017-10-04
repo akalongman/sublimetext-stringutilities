@@ -1,65 +1,261 @@
 [
-	{ "caption" : "-", "id" : "context-convert-end"},
-	{
-		"caption" : "String Utilities",
-		"id" : "context-convert",
-		"children" :
-		[
-			{ "command": "convert_tabs_to_spaces", "caption" : "Convert Tabs to Spaces" },
-			{ "command": "convert_spaces_to_tabs", "caption" : "Convert Spaces to Tabs" },
-			{ "caption": "-" },
-			{ "command": "convert_spaces_to_non_breaking", "caption" : "Convert Spaces to &nbsp; (Non-breaking space)" },
-			{ "command": "convert_chars_to_html", "caption" : "Convert Chars to HTML Entities" },
-			{ "command": "convert_html_to_chars", "caption" : "Convert HTML Entities to Chars" },
-			{ "caption": "-" },
-			{ "command": "convert_camel_underscores", "caption" : "Convert camelCase <-> Underscores" },
-			{ "command": "convert_camel_dash", "caption" : "Convert camelCase <-> Dash" },
-			{ "command": "convert_pascal_underscores", "caption" : "Convert PascalCase <-> Underscores" },
-			{ "caption": "-" },
-            { "command": "string_utilities_expand_string", "caption": "Expand Selection To Whole String" },
-            { "command": "convert_single_quotes_to_double", "caption" : "Convert Single Quotes To Double" },
-            { "command": "convert_double_quotes_to_single", "caption" : "Convert Double Quotes To Single" },
-            { "command": "url_encode", "caption" : "Encode as URL Notation" },
-            { "command": "url_decode", "caption" : "Decode from URL Notation" },
-			{ "command": "convert_to_unicode_notation", "caption" : "Convert To Unicode Notation" },
-			{ "command": "convert_from_unicode_notation", "caption" : "Convert From Unicode Notation" },
-			{ "command": "convert_to_base64", "caption" : "Convert To Base64" },
-			{ "command": "convert_from_base64", "caption" : "Convert From Base64" },
-			{ "command": "convert_to_hex", "caption" : "Convert To Hex" },
-			{ "command": "convert_from_hex", "caption" : "Convert From Hex" },
-			{ "command": "convert_hex_to_rgb", "caption" : "Convert HTML Color Hex To RGB" },
-			{ "command": "convert_rgb_to_hex", "caption" : "Convert HTML Color RGB To Hex" },
-			{ "command": "convert_md5", "caption" : "Calculate MD5"},
-			{ "command": "convert_sha1", "caption" : "Calculate SHA1"},
-			{ "caption": "-" },
-			{ "command": "convert_time_format", "caption": "Convert Unixtime <-> Datetime" },
-			{ "command": "insert_timestamp", "caption": "Insert Current Datetime" },
-			{ "caption": "-" },
-			{ "command": "generate_password", "caption": "Generate Password (6 char)", "args": {"length": "6"} },
-			{ "command": "generate_password", "caption": "Generate Password (8 char)", "args": {"length": "8"} },
-			{ "command": "generate_password", "caption": "Generate Password (12 char)", "args": {"length": "12"} },
-			{ "command": "generate_password", "caption": "Generate Password (16 char)", "args": {"length": "16"} },
-			{ "command": "generate_password", "caption": "Generate Password (32 char)", "args": {"length": "32"} },
-			{ "command": "generate_password", "caption": "Generate Password (40 char)", "args": {"length": "40"} },
-			{ "command": "generate_password", "caption": "Generate Password (64 char)", "args": {"length": "64"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (6 char)", "args": {"length": "6"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (8 char)", "args": {"length": "8"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (12 char)", "args": {"length": "12"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (16 char)", "args": {"length": "16"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (32 char)", "args": {"length": "32"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (40 char)", "args": {"length": "40"} },
-			{ "command": "generate_password_spec_symbols", "caption": "Generate Password with spec symbols (64 char)", "args": {"length": "64"} },
-			{ "caption": "-" },
-			{ "command": "decode_heidi_sql", "caption": "Decode HeidiSQL password"},
-			{ "caption": "-" },
-			{ "command": "string_utilities_int_ip", "caption": "Insert Internal IP" },
-			{ "command": "string_utilities_ext_ip", "caption": "Insert External IP" },
-			{ "caption": "-" },
-			{ "command": "string_utilities_decode_json", "caption": "Pretify JSON String" },
-			{ "caption": "-" },
-			{ "command": "php_object_to_array", "caption": "Convert PHP Object to Array" }
-
-		]
-	},
-	{ "caption" : "-", "id" : "context-convert-end"}
+    {
+        "caption": "-",
+        "id": "context-convert-end"
+    },
+    {
+        "caption": "String Utilities",
+        "children": [
+            {
+                "caption": "Convert Tabs to Spaces",
+                "command": "convert_tabs_to_spaces"
+            },
+            {
+                "caption": "Convert Spaces to Tabs",
+                "command": "convert_spaces_to_tabs"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Convert Spaces to &nbsp; (Non-breaking space)",
+                "command": "convert_spaces_to_non_breaking"
+            },
+            {
+                "caption": "Convert Chars to HTML Entities",
+                "command": "convert_chars_to_html"
+            },
+            {
+                "caption": "Convert HTML Entities to Chars",
+                "command": "convert_html_to_chars"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Convert camelCase <-> Underscores",
+                "command": "convert_camel_underscores"
+            },
+            {
+                "caption": "Convert camelCase <-> Dash",
+                "command": "convert_camel_dash"
+            },
+            {
+                "caption": "Convert PascalCase <-> Underscores",
+                "command": "convert_pascal_underscores"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Expand Selection To Whole String",
+                "command": "string_utilities_expand_string"
+            },
+            {
+                "caption": "Convert Single Quotes To Double",
+                "command": "convert_single_quotes_to_double"
+            },
+            {
+                "caption": "Convert Double Quotes To Single",
+                "command": "convert_double_quotes_to_single"
+            },
+            {
+                "caption": "Encode as URL Notation",
+                "command": "url_encode"
+            },
+            {
+                "caption": "Decode from URL Notation",
+                "command": "url_decode"
+            },
+            {
+                "caption": "Convert To Unicode Notation",
+                "command": "convert_to_unicode_notation"
+            },
+            {
+                "caption": "Convert From Unicode Notation",
+                "command": "convert_from_unicode_notation"
+            },
+            {
+                "caption": "Convert To Base64",
+                "command": "convert_to_base64"
+            },
+            {
+                "caption": "Convert From Base64",
+                "command": "convert_from_base64"
+            },
+            {
+                "caption": "Convert To Hex",
+                "command": "convert_to_hex"
+            },
+            {
+                "caption": "Convert From Hex",
+                "command": "convert_from_hex"
+            },
+            {
+                "caption": "Convert HTML Color Hex To RGB",
+                "command": "convert_hex_to_rgb"
+            },
+            {
+                "caption": "Convert HTML Color RGB To Hex",
+                "command": "convert_rgb_to_hex"
+            },
+            {
+                "caption": "Calculate MD5",
+                "command": "convert_md5"
+            },
+            {
+                "caption": "Calculate SHA1",
+                "command": "convert_sha1"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Convert Unixtime <-> Datetime",
+                "command": "convert_time_format"
+            },
+            {
+                "caption": "Insert Current Datetime",
+                "command": "insert_timestamp"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "args": {
+                    "length": "6"
+                },
+                "caption": "Generate Password (6 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "8"
+                },
+                "caption": "Generate Password (8 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "12"
+                },
+                "caption": "Generate Password (12 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "16"
+                },
+                "caption": "Generate Password (16 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "32"
+                },
+                "caption": "Generate Password (32 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "40"
+                },
+                "caption": "Generate Password (40 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "64"
+                },
+                "caption": "Generate Password (64 char)",
+                "command": "generate_password"
+            },
+            {
+                "args": {
+                    "length": "6"
+                },
+                "caption": "Generate Password with spec symbols (6 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "8"
+                },
+                "caption": "Generate Password with spec symbols (8 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "12"
+                },
+                "caption": "Generate Password with spec symbols (12 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "16"
+                },
+                "caption": "Generate Password with spec symbols (16 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "32"
+                },
+                "caption": "Generate Password with spec symbols (32 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "40"
+                },
+                "caption": "Generate Password with spec symbols (40 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "args": {
+                    "length": "64"
+                },
+                "caption": "Generate Password with spec symbols (64 char)",
+                "command": "generate_password_spec_symbols"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Decode HeidiSQL password",
+                "command": "decode_heidi_sql"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Insert Internal IP",
+                "command": "string_utilities_int_ip"
+            },
+            {
+                "caption": "Insert External IP",
+                "command": "string_utilities_ext_ip"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Pretify JSON String",
+                "command": "string_utilities_decode_json"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Convert PHP Object to Array",
+                "command": "php_object_to_array"
+            }
+        ],
+        "id": "context-convert"
+    },
+    {
+        "caption": "-",
+        "id": "context-convert-end"
+    }
 ]
