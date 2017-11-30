@@ -421,12 +421,12 @@ class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
         sublime.status_message('Convert from epoch to human readable date.')
         timestamp = float(timestamp)
         stamp = datetime.fromtimestamp(timestamp)
-        return stamp.strftime("%Y-%m-%d %H:%M")
+        return stamp.strftime("%Y-%m-%d %H:%M:%S")
 
     def toUnix(self, timestr):
         sublime.status_message('Convert from human readable date to epoch.')
         try:
-            datetime_to_convert = datetime.strptime(timestr, "%Y-%m-%d %H:%M")
+            datetime_to_convert = datetime.strptime(timestr, "%Y-%m-%d %H:%M:%S")
             return '%d' % (time.mktime(datetime_to_convert.timetuple()))
         except:
             return False
