@@ -419,8 +419,11 @@ class ConvertTimeFormatCommand(sublime_plugin.TextCommand):
 
     def fromUnix(self, timestamp):
         sublime.status_message('Convert from epoch to human readable date.')
-        timestamp = float(timestamp)
-        stamp = datetime.fromtimestamp(timestamp)
+        tsfloat = float(timestamp)
+        # convert timestamp with millis to seconds
+        if (len(timestamp) > 10):
+            tsfloat = tsfloat/1000.0
+        stamp = datetime.fromtimestamp(tsfloat)
         return stamp.strftime("%Y-%m-%d %H:%M:%S")
 
     def toUnix(self, timestr):
