@@ -116,11 +116,11 @@
         "command": "insert_timestamp"
     },
     {
-        "caption": "String Utilities: Insert Password (6 char)",
+        "caption": "String Utilities: Insert Password",
         "command": "generate_password"
     },
     {
-        "caption": "String Utilities: Insert Password with spec symbols (6 char)",
+        "caption": "String Utilities: Insert Password with spec symbols",
         "command": "generate_password_spec_symbols"
     },
     {
