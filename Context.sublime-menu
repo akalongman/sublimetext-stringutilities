@@ -108,6 +108,37 @@
                 "command": "convert_sha1"
             },
             {
+                "caption": "Calculate SHA224",
+                "command": "convert_sha224"
+            },
+            {
+                "caption": "Calculate SHA256",
+                "command": "convert_sha256"
+            },
+            {
+                "caption": "Calculate SHA384",
+                "command": "convert_sha384"
+            },
+            {
+                "caption": "Calculate SHA512",
+                "command": "convert_sha512"
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Pretify JSON String",
+                "command": "string_utilities_decode_json"
+            },
+            {
+                "caption": "JSON Escape",
+                "command": "json_escape"
+            },
+            {
+                "caption": "JSON Unescape",
+                "command": "json_unescape"
+            },
+            {
                 "caption": "-"
             },
             {
@@ -122,101 +153,11 @@
                 "caption": "-"
             },
             {
-                "args": {
-                    "length": "6"
-                },
-                "caption": "Generate Password (6 char)",
+                "caption": "Generate Password",
                 "command": "generate_password"
             },
             {
-                "args": {
-                    "length": "8"
-                },
-                "caption": "Generate Password (8 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "12"
-                },
-                "caption": "Generate Password (12 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "16"
-                },
-                "caption": "Generate Password (16 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "32"
-                },
-                "caption": "Generate Password (32 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "40"
-                },
-                "caption": "Generate Password (40 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "64"
-                },
-                "caption": "Generate Password (64 char)",
-                "command": "generate_password"
-            },
-            {
-                "args": {
-                    "length": "6"
-                },
-                "caption": "Generate Password with spec symbols (6 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "8"
-                },
-                "caption": "Generate Password with spec symbols (8 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "12"
-                },
-                "caption": "Generate Password with spec symbols (12 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "16"
-                },
-                "caption": "Generate Password with spec symbols (16 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "32"
-                },
-                "caption": "Generate Password with spec symbols (32 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "40"
-                },
-                "caption": "Generate Password with spec symbols (40 char)",
-                "command": "generate_password_spec_symbols"
-            },
-            {
-                "args": {
-                    "length": "64"
-                },
-                "caption": "Generate Password with spec symbols (64 char)",
+                "caption": "Generate Password with spec symbols",
                 "command": "generate_password_spec_symbols"
             },
             {
@@ -236,13 +177,6 @@
             {
                 "caption": "Insert External IP",
                 "command": "string_utilities_ext_ip"
-            },
-            {
-                "caption": "-"
-            },
-            {
-                "caption": "Pretify JSON String",
-                "command": "string_utilities_decode_json"
             },
             {
                 "caption": "-"

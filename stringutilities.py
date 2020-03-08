@@ -206,6 +206,47 @@ class ConvertFromUnicodeNotationCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, text)
 
 
+class StringEncode(sublime_plugin.TextCommand):
+    def run(self, edit, **kwargs):
+        regions = self.view.sel()
+
+        if kwargs.get('source') == 'clipboard':
+            del kwargs['source']
+            text = sublime.get_clipboard()
+            replacement = self.encode(text, **kwargs)
+            for region in regions:
+                if region.empty():
+                    self.view.insert(edit, region.begin(), replacement)
+                else:
+                    self.view.replace(edit, region, replacement)
+            return
+
+        elif 'source' in kwargs:
+            sublime.status_message('Unsupported source {0!r}'.format(kwargs['source']))
+            return
+
+        if any(map(lambda region: region.empty(), regions)):
+            regions = [sublime.Region(0, self.view.size())]
+        for region in regions:
+            text = self.view.substr(region)
+            replacement = self.encode(text, **kwargs)
+            self.view.replace(edit, region, replacement)
+
+
+class JsonEscapeCommand(StringEncode):
+    def encode(self, text):
+        return json.dumps(text)[1:-1]
+
+
+class JsonUnescapeCommand(StringEncode):
+    def encode(self, text):
+        if text[:1] == "'" and text[-1:] == "'":
+            return self.encode(text[1:-1])
+        if text[:1] != '"' and text[-1:] != '"':
+            return self.encode('"' + text + '"')
+        return json.loads(text)
+
+
 class ConvertToBase64Command(sublime_plugin.TextCommand):
     #Encode string with base64
     def run(self, edit):
@@ -436,22 +477,33 @@ class InsertTimestampCommand(sublime_plugin.TextCommand):
     #This will allow you to insert timestamp to current position
     def run(self, edit):
         for region in self.view.sel():
-            self.view.insert(edit, region.begin(), datetime.now().strftime("%Y-%m-%d %H:%M"))
+            self.view.insert(edit, region.begin(), datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 class GeneratePasswordCommand(sublime_plugin.TextCommand):
     chars = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ"
 
-    def run(self, edit, length=16):
-        length = int(length)
-        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
+    def run(self, edit):
+        self.view.window().show_input_panel("Enter Length(int≤54)", "", self.on_change, None, None)
+
+    def on_change(self, length):
+        if length:
+            length = int(length)
+            text = ''.join(sample(self.chars, length))
+            self.view.run_command("insert", {"characters": text})
+
 
 class GeneratePasswordSpecSymbolsCommand(sublime_plugin.TextCommand):
     chars = "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ%*)?@#$~"
 
-    def run(self, edit, length=16):
-        length = int(length)
-        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
+    def run(self, edit):
+        self.view.window().show_input_panel("Enter Length(int≤64)", "", self.on_change, None, None)
+
+    def on_change(self, length):
+        if length:
+            length = int(length)
+            text = ''.join(sample(self.chars, length))
+            self.view.run_command("insert", {"characters": text})
 
 class DecodeHeidiSqlCommand(sublime_plugin.TextCommand):
     # Requires .strip('\x00') on output otherwise sublimetext adds a 'NUL' control chracter
@@ -470,7 +522,7 @@ class DecodeHeidiSqlCommand(sublime_plugin.TextCommand):
 
 class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        url = "http://api.long.ge/sublimetext/ip.php"
+        url = "https://myip.ipip.net/"
         request = urllib.request.Request(url)
         response = urllib.request.urlopen(request)
         for region in self.view.sel():
@@ -484,10 +536,12 @@ class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
 
 class StringUtilitiesIntIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('google.com', 0))
-        int_ip = s.getsockname()[0]
-        s.close()
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('8.8.8.8', 80))
+            int_ip = s.getsockname()[0]
+        finally:
+            s.close()
         for region in self.view.sel():
                 self.view.insert(edit, region.begin(), int_ip)
 
@@ -503,28 +557,73 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
     i = 0
 
     def run(self, edit):
-        for region in self.view.sel():
-            self.output = ""
-            if not region.empty():
-                text = self.view.substr(region).encode(self.enc())
+
+        try:
+            self.view.erase_regions('json_errors')
+            self.view.erase_status('json_errors')
+            for region in self.view.sel():
+                self.output = ""
+                if region.empty():
+                    selection = sublime.Region(0, self.view.size())
+                else:
+                    selection = region
+
+                text = self.view.substr(selection).encode(self.enc())
                 text = str(text, 'utf8')
                 data = json.loads(text, encoding='utf8')
                 output = json.dumps(data, indent=4, sort_keys=True)
 
-                self.view.replace(edit, region, output)
+                self.view.replace(edit, selection, output)
 
+                    #self.recursivePrint(data)
 
-                #self.recursivePrint(data)
+                    #print(self.output)
 
-                #print(self.output)
+                    #pp = pprint.PrettyPrinter(indent=4, width=1)
+                    #data = pp.pformat(data)
+                    #data = self.output
+                    #data = data.replace('{   ', '{')
+                    #data = data.replace('{', '\n   {\n')
 
-                #pp = pprint.PrettyPrinter(indent=4, width=1)
-                #data = pp.pformat(data)
-                #data = self.output
-                #data = data.replace('{   ', '{')
-                #data = data.replace('{', '\n   {\n')
+                    #self.view.replace(edit, region, self.output)
+        except Exception:
+            exc = sys.exc_info()[1]
+            sublime.status_message(str(exc))
+            for region in self.view.sel():
+                if region.empty():
+                    self.highlight_error(str(exc))
+                else:
+                    startrow, startcol = self.view.rowcol(region.begin())
+                    self.highlight_error(str(exc), lineBegin=startrow)
 
-                #self.view.replace(edit, region, self.output)
+    def highlight_error(self, message, lineBegin=0):
+
+        self.view.erase_regions('json_errors')
+        self.view.erase_status('json_errors')
+
+        json_error_matcher = re.compile(r"line (\d+)")
+        m = json_error_matcher.search(message)
+        if m:
+            line = int(m.group(1)) + lineBegin - 1
+
+            # sometime we need to highlight one line above
+            if "','" in message and "delimiter" in message:
+                line_content = self.view.substr(self.view.full_line(self.view.text_point(line - 1, 0)))
+                if line_content.strip()[-1] != ',' and line_content.strip() != '{' and line_content.strip() != '}':
+                    line -= 1
+
+            if "control character '\\n'" in message:
+                line_content = self.view.substr(self.view.full_line(self.view.text_point(line - 1, 0)))
+                quotes = re.findall(r"\"", line_content)
+                if len(quotes) % 2 != 0 and len(quotes) != 0:
+                    line -= 1
+
+            regions = [self.view.full_line(self.view.text_point(line, 0)), ]
+
+            self.view.add_regions('json_errors', regions, 'invalid', 'dot',
+                                  sublime.DRAW_OUTLINED)
+            self.view.show(regions[0])
+            self.view.set_status('json_errors', message)
 
     def enc(self):
         if self.view.encoding() == 'Undefined':
