@@ -10,6 +10,7 @@ import re
 import sys
 import time
 import base64
+import codecs
 import html.entities as htmlentitydefs
 from html import escape
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
@@ -23,6 +24,25 @@ import pprint
 if sys.hexversion >= 0x3000000:
     def unichr(c):
         return chr(c)
+
+def view_encoding(view):
+    """Python codec name for the view's encoding. Sublime reports display
+    names such as "Western (Windows 1252)" or "UTF-8 with BOM"."""
+    name = view.encoding()
+    if name == 'Undefined':
+        name = view.settings().get('default_encoding', 'UTF-8')
+    name = name.lower().replace(' with bom', '')
+    match = re.search(r'\((.*)\)', name)
+    if match:
+        name = match.group(1)
+    name = re.sub(r'^(?:windows|cp) ', 'cp', name).replace('iso ', 'iso')
+    if name == 'mac':
+        # "Central European (Mac)" is the only plain "(Mac)" encoding
+        name = 'mac_latin2'
+    try:
+        return codecs.lookup(name).name
+    except LookupError:
+        return 'utf-8'
 
 class StringUtilitiesExpandStringCommand(sublime_plugin.TextCommand):
     """If the region is contained in a string scope, expands the region to
@@ -61,10 +81,7 @@ class ConvertSelection(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, self.convert(text))
 
     def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+        return view_encoding(self.view)
 
     def convert(self, text):
         raise NotImplementedError("Subclass must implement convert")
@@ -240,14 +257,11 @@ class ConvertToBase64Command(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
                 t = base64.b64encode(text)
-                txt = str(t, self.enc())
+                txt = str(t, 'ascii')
                 self.view.replace(edit, region, txt)
 
     def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+        return view_encoding(self.view)
 
 
 class ConvertFromBase64Command(sublime_plugin.TextCommand):
@@ -264,10 +278,7 @@ class ConvertFromBase64Command(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, txt)
 
     def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+        return view_encoding(self.view)
 
 class ConvertToHexCommand(sublime_plugin.TextCommand):
     #Convert string to hex
@@ -280,10 +291,7 @@ class ConvertToHexCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, txt)
 
     def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+        return view_encoding(self.view)
 
 
 class ConvertFromHexCommand(sublime_plugin.TextCommand):
@@ -297,10 +305,7 @@ class ConvertFromHexCommand(sublime_plugin.TextCommand):
                 self.view.replace(edit, region, txt)
 
     def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+        return view_encoding(self.view)
 
 class ConvertHexToRgbCommand(sublime_plugin.TextCommand):
     #Convert hex to rgb color
@@ -309,12 +314,6 @@ class ConvertHexToRgbCommand(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region)
                 self.view.replace(edit, region, self.hexToRgb(text))
-
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
 
     def hexToRgb(self, value):
         value = value.lstrip('#')
@@ -340,12 +339,6 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
                 rgb_match = re.match(reg_rgb, text)
                 if rgb_match is not None:
                     self.view.replace(edit, region, self.rgbToHex(rgb_match))
-
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
 
     def rgbToHex(self, rgb_match):
         """Converts an rgb(a) value to a hex value.
@@ -518,12 +511,6 @@ class StringUtilitiesIntIpCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
                 self.view.insert(edit, region.begin(), int_ip)
 
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
-
 
 class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
     output = ""
@@ -533,8 +520,7 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             self.output = ""
             if not region.empty():
-                text = self.view.substr(region).encode(self.enc())
-                text = str(text, 'utf8')
+                text = self.view.substr(region)
                 data = json.loads(text)
                 output = json.dumps(data, indent=4, sort_keys=True)
 
@@ -552,12 +538,6 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
                 #data = data.replace('{', '\n   {\n')
 
                 #self.view.replace(edit, region, self.output)
-
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
 
     def recursivePrint(self, src, dpth = 0, key = ''):
         """ Recursively prints nested elements."""
