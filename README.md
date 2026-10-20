@@ -72,6 +72,16 @@ sublime.packages_path()
 ```
 into the console (`` Ctrl-` ``).
 
+Compatibility
+------------------
+
+StringUtilities runs on both Sublime Text plugin hosts:
+
+* Python 3.3: Sublime Text 3, and Sublime Text 4 before build 4213
+* Python 3.14: Sublime Text 4 build 4213 and later
+
+Changes must keep working on both. Avoid language features and standard library additions newer than Python 3.3 (for example f-strings, `secrets` or `html.unescape`), or provide a fallback.
+
 Usage
 ------------------
 
