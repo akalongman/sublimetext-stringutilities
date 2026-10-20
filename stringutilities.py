@@ -120,12 +120,24 @@ class ConvertCharsToHtmlCommand(sublime_plugin.TextCommand):
 
 class ConvertHtmlToCharsCommand(sublime_plugin.TextCommand):
     #Convert XML/HTML Entities into Chars
+    # Only references ending in ';' are decoded, so a query string such as
+    # "?a=1&copy=2" stays intact (html.unescape would decode "&copy").
+    pattern = re.compile(r'&(#[0-9]+|#[xX][0-9a-fA-F]+|[A-Za-z][A-Za-z0-9]*);')
+
     def run(self, edit):
         for region in self.view.sel():
             if not region.empty():
-                text = re.sub('&(%s);' % '|'.join(htmlentitydefs.name2codepoint),
-                    lambda m: unichr(htmlentitydefs.name2codepoint[m.group(1)]), self.view.substr(region))
+                text = self.pattern.sub(self.decode, self.view.substr(region))
                 self.view.replace(edit, region, text)
+
+    def decode(self, match):
+        ref = match.group(1)
+        if ref[0] != '#':
+            return htmlentitydefs.html5.get(ref + ';', match.group(0))
+        codepoint = int(ref[2:], 16) if ref[1] in 'xX' else int(ref[1:])
+        if 0 < codepoint <= 0x10FFFF and not 0xD800 <= codepoint <= 0xDFFF:
+            return unichr(codepoint)
+        return match.group(0)
 
 
 class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
