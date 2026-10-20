@@ -134,7 +134,12 @@ class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toCamelCase(text) if '_' in text and text[0].islower() else (text[0].islower() and self.toUnderscores(text))
+                if '_' in text and text[0].islower():
+                    text = self.toCamelCase(text)
+                elif text[0].islower():
+                    text = self.toUnderscores(text)
+                else:
+                    continue
                 self.view.replace(edit, region, text)
 
     def toUnderscores(self, name):
@@ -150,7 +155,12 @@ class ConvertCamelDashCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toCamelCase(text) if '-' in text and text[0].islower() else (text[0].islower() and self.toDash(text))
+                if '-' in text and text[0].islower():
+                    text = self.toCamelCase(text)
+                elif text[0].islower():
+                    text = self.toDash(text)
+                else:
+                    continue
                 self.view.replace(edit, region, text)
 
     def toDash(self, name):
@@ -167,7 +177,12 @@ class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
-                text = self.toPascalCase(text) if '_' in text and text[0].islower() else (text[0].isupper() and self.toUnderscores(text))
+                if '_' in text and text[0].islower():
+                    text = self.toPascalCase(text)
+                elif text[0].isupper():
+                    text = self.toUnderscores(text)
+                else:
+                    continue
                 self.view.replace(edit, region, text)
 
     def toUnderscores(self, name):
