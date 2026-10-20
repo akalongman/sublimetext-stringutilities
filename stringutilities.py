@@ -299,9 +299,12 @@ class ConvertFromHexCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         for region in self.view.sel():
             if not region.empty():
-                text = self.view.substr(region).encode(self.enc())
-                t = binascii.unhexlify(text)
-                txt = str(t,'ascii')
+                try:
+                    t = binascii.unhexlify(self.view.substr(region).encode('ascii'))
+                    txt = str(t, self.enc())
+                except ValueError as e:
+                    sublime.status_message('Hex decode failed: %s' % e)
+                    continue
                 self.view.replace(edit, region, txt)
 
     def enc(self):
