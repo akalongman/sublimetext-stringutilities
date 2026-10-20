@@ -11,7 +11,7 @@ import sys
 import time
 import base64
 import html.entities as htmlentitydefs
-from cgi import escape
+from html import escape
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from datetime import datetime
 from random import sample, choice, randrange
