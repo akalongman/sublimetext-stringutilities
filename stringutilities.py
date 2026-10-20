@@ -497,17 +497,17 @@ class DecodeHeidiSqlCommand(sublime_plugin.TextCommand):
 
 class StringUtilitiesExtIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        url = "http://api.long.ge/sublimetext/ip.php"
-        request = urllib.request.Request(url)
-        response = urllib.request.urlopen(request)
+        url = "https://api.ipify.org"
+        try:
+            ext_ip = urllib.request.urlopen(url, timeout=10).read().decode('ascii').strip()
+        except Exception as e:
+            sublime.status_message('Could not get external IP: %s' % e)
+            return
+        if not re.match(r'^[0-9a-fA-F.:]+$', ext_ip):
+            sublime.status_message('Unexpected response from %s' % url)
+            return
         for region in self.view.sel():
-            self.view.insert(edit, region.begin(), response.read().decode(self.enc()))
-
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
+            self.view.insert(edit, region.begin(), ext_ip)
 
 class StringUtilitiesIntIpCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -580,19 +580,6 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
                 self.i = self.i + 1
                 self.output += tabs(dpth) + str(self.i) + ' => %s' % src + "\n"
 
-
-
-class StringUtilitiesTestCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        ext_ip = urllib2.urlopen('http://api.long.ge/sublimetext/ip.php').read()
-        for region in self.view.sel():
-            self.view.insert(edit, region.begin(), ext_ip.encode(self.enc()))
-
-    def enc(self):
-        if self.view.encoding() == 'Undefined':
-            return self.view.settings().get('default_encoding', 'UTF-8')
-        else:
-            return self.view.encoding()
 
 
 class PhpObjectToArrayCommand(sublime_plugin.TextCommand):
