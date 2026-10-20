@@ -15,7 +15,7 @@ from html import escape
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from datetime import datetime
 from random import sample, choice, randrange
-import os, socket, urllib
+import os, socket, urllib.parse, urllib.request
 import binascii
 import json
 import pprint
@@ -306,7 +306,7 @@ class ConvertRgbToHexCommand(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region)
                 str_len = len(text)
-                reg_rgb = '^rgb[a]?\((\s*\d+\s*),(\s*\d+\s*),(\s*\d+\s*),?(\s*(0?.?\d)+\s*)?\)$'
+                reg_rgb = r'^rgb[a]?\((\s*\d+\s*),(\s*\d+\s*),(\s*\d+\s*),?(\s*(0?.?\d)+\s*)?\)$'
                 rgb_match = re.match(reg_rgb, text)
                 if rgb_match is not None:
                     self.view.replace(edit, region, self.rgbToHex(rgb_match))
@@ -508,7 +508,7 @@ class StringUtilitiesDecodeJsonCommand(sublime_plugin.TextCommand):
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
                 text = str(text, 'utf8')
-                data = json.loads(text, encoding='utf8')
+                data = json.loads(text)
                 output = json.dumps(data, indent=4, sort_keys=True)
 
                 self.view.replace(edit, region, output)
