@@ -256,8 +256,11 @@ class ConvertFromBase64Command(sublime_plugin.TextCommand):
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region).encode(self.enc())
-                t = base64.b64decode(text)
-                txt = str(t, self.enc())
+                try:
+                    txt = str(base64.b64decode(text), self.enc())
+                except ValueError as e:
+                    sublime.status_message('Base64 decode failed: %s' % e)
+                    continue
                 self.view.replace(edit, region, txt)
 
     def enc(self):
