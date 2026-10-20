@@ -14,7 +14,7 @@ import html.entities as htmlentitydefs
 from html import escape
 from hashlib import md5, sha1, sha224, sha256, sha384, sha512
 from datetime import datetime
-from random import sample, choice, randrange
+from random import SystemRandom
 import os, socket, urllib.parse, urllib.request
 import binascii
 import json
@@ -444,14 +444,11 @@ class GeneratePasswordCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, length=16):
         length = int(length)
-        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
+        rng = SystemRandom()
+        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(rng.choice(self.chars) for _ in range(length)))
 
-class GeneratePasswordSpecSymbolsCommand(sublime_plugin.TextCommand):
+class GeneratePasswordSpecSymbolsCommand(GeneratePasswordCommand):
     chars = "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHKMNPQRSTUVWXYZ%*)?@#$~"
-
-    def run(self, edit, length=16):
-        length = int(length)
-        self.view.insert(edit, self.view.sel()[0].begin(), ''.join(sample(self.chars, length)))
 
 class DecodeHeidiSqlCommand(sublime_plugin.TextCommand):
     # Requires .strip('\x00') on output otherwise sublimetext adds a 'NUL' control chracter
