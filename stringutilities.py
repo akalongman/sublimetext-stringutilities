@@ -157,69 +157,90 @@ class ConvertHtmlToCharsCommand(sublime_plugin.TextCommand):
         return match.group(0)
 
 
-class ConvertCamelUnderscoresCommand(sublime_plugin.TextCommand):
+def split_case(name, separator):
+    """camelCase or PascalCase to lowercase words joined by separator."""
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1' + separator + r'\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1' + separator + r'\2', s1).lower()
+
+def join_case(name, separator, pascal):
+    """Words joined by separator to PascalCase, or to camelCase with the
+    first word lowercased (entirely when it is all uppercase)."""
+    words = name.split(separator)
+    if pascal:
+        return ''.join(word.capitalize() for word in words)
+    first = words[0]
+    if first.isupper():
+        first = first.lower()
+    else:
+        first = first[:1].lower() + first[1:]
+    return first + ''.join(word.capitalize() for word in words[1:])
+
+def toggle_case(text, separator, pascal):
+    """Converts a non-empty selection between separated and joined form.
+    Returns None when the selection is to be left alone."""
+    joined_start = str.isupper if pascal else str.islower
+    identifier = (all(ch.isalnum() or ch == separator for ch in text) and
+                  any(ch.isalpha() for ch in text))
+    if not identifier:
+        # Not an identifier with a letter: the first character decides, as before
+        if separator in text and text[0].islower():
+            return join_case(text, separator, pascal)
+        if joined_start(text[0]):
+            return split_case(text, separator)
+        return None
+    lead = trail = ''
+    core = text
+    if text.startswith(separator):
+        # Leading and trailing separator runs are kept as they are; the
+        # identifier's letter keeps the core non-empty
+        stripped = text.lstrip(separator)
+        lead = text[:len(text) - len(stripped)]
+        core = stripped.rstrip(separator)
+        trail = stripped[len(core):]
+    # A capitalized text with an inner case boundary (UserProfile_id) or
+    # with only a trailing separator run (Class_) is not joined, which would
+    # lose its words or its suffix: PascalCase splits it and camelCase
+    # leaves it alone, as before
+    as_before = core[0].isupper() and (
+        separator not in core.rstrip(separator) or any(
+            split_case(word, separator) != word.lower()
+            for word in core.split(separator)))
+    if separator in core and not as_before:
+        core = join_case(core, separator, pascal)
+    elif joined_start(core[0]):
+        core = split_case(core, separator)
+    else:
+        return None
+    return lead + core + trail
+
+class CaseToggleCommand(sublime_plugin.TextCommand):
+    #Toggle each selection between separated and joined case
+    separator = '_'
+    pascal = False
+
+    def run(self, edit):
+        for region in self.view.sel():
+            if not region.empty():
+                original = self.view.substr(region)
+                text = toggle_case(original, self.separator, self.pascal)
+                if text is not None and text != original:
+                    self.view.replace(edit, region, text)
+
+class ConvertCamelUnderscoresCommand(CaseToggleCommand):
     #Convert camelCase to under_scores and vice versa
-    def run(self, edit):
-        for region in self.view.sel():
-            if not region.empty():
-                text = self.view.substr(region)
-                if '_' in text and text[0].islower():
-                    text = self.toCamelCase(text)
-                elif text[0].islower():
-                    text = self.toUnderscores(text)
-                else:
-                    continue
-                self.view.replace(edit, region, text)
+    separator = '_'
+    pascal = False
 
-    def toUnderscores(self, name):
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
-
-    def toCamelCase(self, name):
-        return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('_')))
-
-class ConvertCamelDashCommand(sublime_plugin.TextCommand):
+class ConvertCamelDashCommand(CaseToggleCommand):
     #Convert camelCase to dash and vice versa
-    def run(self, edit):
-        for region in self.view.sel():
-            if not region.empty():
-                text = self.view.substr(region)
-                if '-' in text and text[0].islower():
-                    text = self.toCamelCase(text)
-                elif text[0].islower():
-                    text = self.toDash(text)
-                else:
-                    continue
-                self.view.replace(edit, region, text)
-
-    def toDash(self, name):
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1-\2', name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1-\2', s1).lower()
-
-    def toCamelCase(self, name):
-        return ''.join(ch.capitalize() if i > 0 else ch for i, ch in enumerate(name.split('-')))
+    separator = '-'
+    pascal = False
 
 
-class ConvertPascalUnderscoresCommand(sublime_plugin.TextCommand):
+class ConvertPascalUnderscoresCommand(CaseToggleCommand):
     #Convert PascalCase to under_scores and vice versa
-    def run(self, edit):
-        for region in self.view.sel():
-            if not region.empty():
-                text = self.view.substr(region)
-                if '_' in text and text[0].islower():
-                    text = self.toPascalCase(text)
-                elif text[0].isupper():
-                    text = self.toUnderscores(text)
-                else:
-                    continue
-                self.view.replace(edit, region, text)
-
-    def toUnderscores(self, name):
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
-
-    def toPascalCase(self, name):
-        return ''.join(map(lambda x: x.capitalize(), name.split('_')))
+    separator = '_'
+    pascal = True
 
 
 class ConvertToUnicodeNotationCommand(sublime_plugin.TextCommand):
