@@ -96,8 +96,4 @@ Todo
  * Add some missed functions
 
 
-## Libraries ##
-
-- **dateutil** by Gustavo Niemeyer is used for adding extensions to the standard python 2.3+ datetime module.. **PSF License**
-
 [0]: http://wbond.net/sublime_packages/package_control
