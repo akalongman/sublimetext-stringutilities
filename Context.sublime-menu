@@ -45,6 +45,10 @@
                 "command": "convert_pascal_underscores"
             },
             {
+                "caption": "Convert PascalCase <-> Dash",
+                "command": "convert_pascal_dash"
+            },
+            {
                 "caption": "-"
             },
             {

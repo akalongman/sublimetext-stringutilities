@@ -7,7 +7,10 @@ StringUtilities is a Sublime Text 3 plugin, which adds to the editor useful stri
 * Convert Spaces to Non-Breaking Spaces
 * Convert Chars to Html Entities
 * Convert Html Entities to Chars
-* Convert Camel Case <-> Underscores
+* Convert camelCase <-> Underscores
+* Convert camelCase <-> Dash
+* Convert PascalCase <-> Underscores
+* Convert PascalCase <-> Dash
 * Convert Single Quotes To Double
 * Convert Double Quotes To Single
 * Encode as URL Notation

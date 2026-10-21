@@ -242,6 +242,11 @@ class ConvertPascalUnderscoresCommand(CaseToggleCommand):
     separator = '_'
     pascal = True
 
+class ConvertPascalDashCommand(CaseToggleCommand):
+    #Convert PascalCase to dash and vice versa
+    separator = '-'
+    pascal = True
+
 
 class ConvertToUnicodeNotationCommand(sublime_plugin.TextCommand):
     #Convert string to Unicode notation

@@ -36,6 +36,10 @@
         "command": "convert_pascal_underscores"
     },
     {
+        "caption": "String Utilities: Convert PascalCase <-> Dash",
+        "command": "convert_pascal_dash"
+    },
+    {
         "caption": "String Utilities: Convert Single Quotes To Double",
         "command": "convert_single_quotes_to_double"
     },
