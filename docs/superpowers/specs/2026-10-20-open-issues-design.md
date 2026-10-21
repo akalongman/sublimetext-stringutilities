@@ -124,7 +124,9 @@ New rules, the same for all four commands:
 
 1. The new rules apply only to an identifier: a selection in which every
    character is a letter, a digit or the command's separator (Unicode-aware,
-   as `str.isalnum()` decides). Every other selection keeps today's behavior
+   as `str.isalnum()` decides), and which contains at least one letter, so
+   a number such as `1_000_000` is not joined (owner's call during the
+   build). Every other selection keeps today's behavior
    exactly, including today's first-character check. That covers
    indentation, a whole line, quotes, `$`, several words and a trailing
    newline (designer's call; the anti-goals require it, because a whole-line
@@ -138,7 +140,14 @@ New rules, the same for all four commands:
    separator is left unchanged, so this rule changes nothing that converts
    today).
 3. If the text contains the separator, join it into the joined form,
-   whatever its first character is.
+   whatever its first character is, with one exception (owner's call during
+   the build, after reviews found regressions). Text that starts with an
+   uppercase letter keeps today's behavior when a segment has an inner case
+   boundary, meaning one the splitting logic would split at (`UserProfile_id`,
+   `HTTPServer_x`), or when its only separators are a trailing run
+   (`Class_`). Today's behavior is a split under PascalCase and no change
+   under camelCase. Joining such text would lose its word boundaries or its
+   suffix.
 4. Otherwise, if its first character is lowercase (camelCase commands) or
    uppercase (PascalCase commands), split it into the separated form with the
    existing splitting logic.
@@ -149,6 +158,8 @@ New rules, the same for all four commands:
    and otherwise only its first character is lowercased (designer's call).
    For input that converts today the first character is already lowercase,
    so its output does not change.
+7. A result equal to the selection is not written back, so the file is not
+   marked as modified (owner's call during the build).
 
 Worked examples. Rows marked "same" are regression checks; the rest are the
 intended changes. These rows are the test cases.
@@ -169,7 +180,14 @@ intended changes. These rows are the test cases.
 | camel `_` | `_private_name` with four leading spaces | unchanged | same |
 | camel `_` | `$_SERVER` | unchanged | same |
 | camel `_` | `foo_bar` followed by a newline | `fooBar` and the newline | same |
+| camel `_` | `1_000_000` | unchanged | same |
+| camel `_` | `HTTPServer_x` | unchanged | same |
+| camel `_` | `FooBar_baz` | unchanged | same |
+| camel `_` | `UserProfile_id` | unchanged | same |
+| camel `_` | `Class_` | unchanged | same |
+| camel `_` | `MAX_` | unchanged | same |
 | camel `_` | `MAX_VALUE` | unchanged | `maxValue` |
+| camel `_` | `MAX_VALUE_` | unchanged | `maxValue` |
 | camel `_` | `Foo_bar` | unchanged | `fooBar` |
 | camel `_` | `_private_name` | unchanged | `_privateName` |
 | camel `_` | `_privateName` | unchanged | `_private_name` |
@@ -180,7 +198,16 @@ intended changes. These rows are the test cases.
 | Pascal `_` | `HTTPServer` | `http_server` | same |
 | Pascal `_` | `foo_bar_` | `FooBar` | same |
 | Pascal `_` | `Hello_world foo` | `hello_world foo` | same |
+| Pascal `_` | `1_000_000` | unchanged | same |
+| Pascal `_` | `UserProfile_id` | `user_profile_id` | same |
+| Pascal `_` | `FooBar_baz` | `foo_bar_baz` | same |
+| Pascal `_` | `FooBar_` | `foo_bar_` | same |
+| Pascal `_` | `TestCase_setUp` | `test_case_set_up` | same |
+| Pascal `_` | `HTTPServer_x` | `http_server_x` | same |
+| Pascal `_` | `Class_` | `class_` | same |
+| Pascal `_` | `MAX_` | `max_` | same |
 | Pascal `_` | `MAX_VALUE` | `max_value` | `MaxValue` |
+| Pascal `_` | `MAX_VALUE_` | `max_value_` | `MaxValue` |
 | Pascal `_` | `Foo_Bar` | `foo__bar` | `FooBar` |
 | Pascal `_` | `_private_name` | unchanged | `_PrivateName` |
 | camel `-` | `foo-bar` | `fooBar` | same |
@@ -195,6 +222,10 @@ intended changes. These rows are the test cases.
 | Pascal `-` | `MyComponent` | (new) | `my-component` |
 | Pascal `-` | `HTTPServer` | (new) | `http-server` |
 | Pascal `-` | `--main-color` | (new) | `--MainColor` |
+| Pascal `-` | `MAX-VALUE` | (new) | `MaxValue` |
+| Pascal `-` | `UserProfile-id` | (new) | `user-profile-id` |
+| Pascal `-` | `HTTPServer-x` | (new) | `http-server-x` |
+| Pascal `-` | `Class-` | (new) | `class-` |
 
 The new command (#50) is `ConvertPascalDashCommand`, command name
 `convert_pascal_dash`. It appears:
@@ -207,10 +238,13 @@ The new command (#50) is `ConvertPascalDashCommand`, command name
 - in the README feature list. Replace the single "Convert Camel Case <->
   Underscores" line with one line per converter (four lines).
 
-Closing comment for #32, posted with the release: the converters treat any
-text containing the separator as separated text now, acronyms are not kept
-when joining (`a_LL_pointer` becomes `aLlPointer`, as lodash and the Google
-style guide do), and a round trip cannot restore them in either direction.
+Closing comment for #32, posted with the release: the converters now treat
+an identifier containing the separator as separated text whatever its first
+letter (`MAX_VALUE` becomes `maxValue` or `MaxValue`), except capitalized
+text with an inner case boundary or only a trailing separator, which keeps
+its old behavior. Acronyms are not kept when joining (`a_LL_pointer` becomes
+`aLlPointer`, as lodash and the Google style guide do), and a round trip
+cannot restore them in either direction.
 
 ## #26: nested menus
 
